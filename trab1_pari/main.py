@@ -3,6 +3,7 @@
 """ trabalho PARI 2020/2021 Grupo 2 """
 
 import  argparse
+import readchar
 
 
 def escolhaModo():
@@ -46,6 +47,9 @@ def escolhaModo():
 def Inicio():
     print ("Press any key to start the test")
     while True:
+
+
+
 
 
 
