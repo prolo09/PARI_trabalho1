@@ -9,7 +9,7 @@ import random
 from time import time
 from collections import namedtuple
 
-Info = namedtuple('Info', ['t', 'ls','lr']) # t tempo ls letra aleatoria lr letra introduzida
+input = namedtuple('Input', ['requested', 'received','duration']) # t tempo ls letra aleatoria lr letra introduzida
 
 def escolhaModo():
 
@@ -59,33 +59,54 @@ def escolhaModo():
 
 
 def letter_time_counter():
+
+    '''?????fazer com que o programa so asseite letras '''
+
     letter = random.choice(string.ascii_letters) # gera letras em maiusculas e minusculas
     letter = letter.lower() # converte para minusculas
     print('type letter: ' + letter)
     Start=time() # tempo inicio
-    ins_letter = readchar.readchar()
-    Stop= time()
+    ins_letter = readchar.readchar() # pede para inserir uma letra
+    Stop= time() # tempo final
     print('you typed: ' + ins_letter)
-    time_elapsed= Stop-Start
-    return Info(t=time_elapsed,ls=letter,lr=ins_letter)
+    time_elapsed= Stop-Start # tempo no de insersao da letra
+
+
+    return input( requested=letter,received=ins_letter,duration=time_elapsed)
 
 
 
 
-def ModoTime(time):
+def ModoTime(Time):
     # modo de teste limitado pelo tempo
 
+    timeinicio=time()
+    timeduraçao=timeinicio+Time
+
+    while True:
+        timeinicio=time()
+        if timeinicio!=timeduraçao:
+
+            print
+        else:
+            break
 
 
-    e = random.choice(string.ascii_letters)
-    e.lower()
 
 
 
-#def ModoInput(input):
+    print ("ddd")
+
+
+
+
+
+
+
+def ModoInput(input):
     # modo de teste limitado pelos inputs
 
-
+    print ("iii")
 
 
 
@@ -100,13 +121,14 @@ def main():
     escolhaModo()
     print ("Press any key to start the test")
     readchar.readchar() # para imprimir uma tecla qualquer para continuar o teste
-    letter_time_counter()
+
+
 
 
     if modo:
       ModoTime(timeInput)
-    #else:
-      #ModoInput(timeInput)
+    else:
+      ModoInput(timeInput)
 
 
 
