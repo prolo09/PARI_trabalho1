@@ -43,7 +43,20 @@ def escolhaModo():
         return (args_list['max_value'])  # imputs maximo
 
 
+def Inicio():
+    print ("Press any key to start the test")
+    while True:
 
+
+
+
+def ModoTime():
+    # modo de teste limitado pelo tempo
+
+
+
+def ModoInput():
+    # modo de teste limitado pelos inputs
 
 
 
@@ -57,9 +70,13 @@ def escolhaModo():
 
 def main():
     escolhaModo()
-    print (modo)
 
 
+
+    if modo==True:
+        ModoTime()
+    else:
+        ModoInput()
 
 
 
