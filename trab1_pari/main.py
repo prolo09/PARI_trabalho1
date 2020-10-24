@@ -75,6 +75,9 @@ def letter_time_counter():
         asrletter=ord(ins_letter)
         if (asrletter >97) and (asrletter<122):
             break
+        elif asrletter==32:
+            return False
+            break
 
 
     Stop= time() # tempo final
@@ -139,7 +142,11 @@ def ModoInput(input):
     list = []
 
     for x in range(0, int(input)):
-        list.append(letter_time_counter())
+        #list.append(letter_time_counter())
+        if letter_time_counter()==False:
+            break
+
+
 
 
 
