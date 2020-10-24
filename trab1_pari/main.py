@@ -68,7 +68,15 @@ def letter_time_counter():
     letter = letter.lower() # converte para minusculas
     print('type letter: ' + letter)
     Start=time() # tempo inicio
-    ins_letter = readchar.readchar() # pede para inserir uma letra
+
+
+    while True:  # serve para so premitir que seja inseridas letras e nao carateres
+        ins_letter = readchar.readchar() # pede para inserir uma letra
+        asrletter=ord(ins_letter)
+        if (asrletter >97) and (asrletter<122):
+            break
+
+
     Stop= time() # tempo final
 
     if letter == ins_letter:
@@ -92,7 +100,11 @@ def ModoTime(Time):
 
     for x in range(1,3):
 
-        list.append(letter_time_counter())
+
+
+
+            list.append(letter_time_counter())
+
 
 
     print (list[1].duration)
