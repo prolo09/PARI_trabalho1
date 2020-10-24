@@ -2,7 +2,7 @@
 
 """ trabalho PARI 2020/2021 Grupo 2 """
 
-import  argparse
+import argparse
 import string
 import readchar
 import random
@@ -10,14 +10,14 @@ from time import time
 from collections import namedtuple
 from colorama import Fore
 
-input = namedtuple('Input', ['requested', 'received','duration']) # t tempo ls letra aleatoria lr letra introduzida
+input = namedtuple('Input', ['requested', 'received', 'duration'])  # t tempo ls letra aleatoria lr letra introduzida
+
 
 def escolhaModo():
-
     # escolha do MODO DE TESTE
 
-    global modo # variavel para saber em que modo de jogo estou
-    global timeInput # variavel que guarda os tempo ou o input
+    global modo  # variavel para saber em que modo de jogo estou
+    global timeInput  # variavel que guarda os tempo ou o input
 
     testModo = argparse.ArgumentParser(description="Defenicao do modo de teste")
 
@@ -41,100 +41,58 @@ def escolhaModo():
         print(tes)
         print ("PARI Typing Test, Grupo 2, Outober 2020")  # ?????falta por pari em cor vermelho
         print ("test running up to " + str(args_list['max_value']) + " seconds.")
-        timeInput= (args_list['max_value'])  # tempo maximo
+        timeInput = (args_list['max_value'])  # tempo maximo
 
     else:
-        modo= False # modo false quer dizer que o modo do teste e por imputs limite
+        modo = False  # modo false quer dizer que o modo do teste e por imputs limite
         print (tes)
         print ("PARI Typing Test, Grupo 2, Outober 2020")  # ????? falta por a cor no pari
         print ("test running up to " + str(args_list['max_value']) + " inputs")
-        timeInput= (args_list['max_value'])  # imputs maximo
-
-
-
-
-
-
-
-
+        timeInput = (args_list['max_value'])  # imputs maximo
 
 
 def letter_time_counter():
 
-    '''?????fazer com que o programa so aceite letras '''
-
-
-    letter = random.choice(string.ascii_letters) # gera letras em maiusculas e minusculas
-    letter = letter.lower() # converte para minusculas
+    letter = random.choice(string.ascii_letters)  # gera letras em maiusculas e minusculas
+    letter = letter.lower()  # converte para minusculas
     print('type letter: ' + letter)
-    Start=time() # tempo inicio
-
+    Start = time()  # tempo inicio
 
     while True:  # serve para so premitir que seja inseridas letras e nao carateres e caso seja espaco interromper o programa
-        ins_letter = readchar.readchar() # pede para inserir uma letra
-        asrletter=ord(ins_letter)
-        if (asrletter >97) and (asrletter<122):   # so deixa de pedir letras quando insiro uma dentro dos parametros ascii pertendidid
+        ins_letter = readchar.readchar()  # pede para inserir uma letra
+        asrletter = ord(ins_letter)
+        if (asrletter > 97) and (
+                asrletter < 122):  # so deixa de pedir letras quando insiro uma dentro dos parametros ascii pertendidid
             break
-        elif asrletter==32:  # caso clique no espaco devolve-me um tople de false
+        elif asrletter == 32:  # caso clique no espaco devolve-me um tople de false
             return input(requested=False, received=False, duration=False)
 
-
-
-    Stop= time() # tempo final
+    Stop = time()  # tempo final
 
     if letter == ins_letter:
         print('you typed letter: ' + Fore.GREEN + ins_letter + Fore.RESET)
     else:
         print('you typed letter: ' + Fore.RED + ins_letter + Fore.RESET)
 
+    time_elapsed = Stop - Start  # tempo de insersao da letra
 
-    time_elapsed = Stop-Start # tempo de insersao da letra
-
-
-    return input( requested=letter,received=ins_letter,duration=time_elapsed)
-
-
+    return input(requested=letter, received=ins_letter, duration=time_elapsed)
 
 
 def ModoTime(Time):
     # modo de teste limitado pelo tempo
 
-    list=[]
-
-    for x in range(1,3):
+    listTime = []
 
 
+    # print (list[1].duration)
 
+    timeduracao = int(time()) + int(Time)
 
-            list.append(letter_time_counter())
-
-
-
-    print (list[1].duration)
-
-
-
-
-
-
-    timeinicio=time()
-    timeduracao=int(timeinicio)+int(Time)
-
-
-   # while True:
-    #    timeinicio=time()
-     #   if timeinicio!=timeduracao:
-
-      #      print
-       # else:
-        #    break
-
-
-
-
-
-
-
+    while True:
+        listTime.append(letter_time_counter())
+        if time() >= timeduracao:
+            break
 
 
 def ModoInput(input):
@@ -142,49 +100,24 @@ def ModoInput(input):
     list = []
 
     for x in range(0, int(input)):
-        list.append(letter_time_counter())
-        if list[x][1]==False:
-            del list[x]
+        list.append(letter_time_counter())  # acresenta os varios nametuples numa lista
+        if list[x][1] == False:  # caso ponha o espaco ele para de pedir os inputs
+            del list[x]  # elemina o ultimo elemento da lista pois e um manetuple a false
             break
-
 
     print (list)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 def main():
-
     escolhaModo()
     print ("Press any key to start the test")
-    readchar.readchar() # para imprimir uma tecla qualquer para continuar o teste
-
-
-
+    readchar.readchar()  # para imprimir uma tecla qualquer para continuar o teste
 
     if modo:
-      ModoTime(timeInput)
+        ModoTime(timeInput)
     else:
-      ModoInput(timeInput)
-
-
-
-
-
+        ModoInput(timeInput)
 
 
 if __name__ == '__main__':
     main()
-
-
