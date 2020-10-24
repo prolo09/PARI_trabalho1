@@ -11,10 +11,10 @@ from colorama import Fore
 from time import time, ctime
 
 input = namedtuple('Input', ['requested', 'received', 'duration'])  # t tempo ls letra aleatoria lr letra introduz
-list = []                                           # lista para guardar os tuples provenientes da dos modo input ou time
+list = []                                                # lista para guardar os tuples provenientes da dos modo input ou time
 
-
-
+number_of_hits=0                                         # variavel de inputs corretos
+number_of_types=0
 
 def escolhaModo():
     # escolha do MODO DE TESTE
@@ -63,17 +63,22 @@ def letter_time_counter():
     while True:                                           # serve para so premitir que seja inseridas letras e nao carateres e caso seja espaco interromper o programa
         ins_letter = readchar.readchar()                  # pede para inserir uma letra
         asrletter = ord(ins_letter)
-        if (asrletter > 97) and (
-                asrletter < 122):                         # so deixa de pedir letras quando insiro uma dentro dos parametros ascii pertendidid
+        if (asrletter >= 97) and (
+                asrletter <= 122):                         # so deixa de pedir letras quando insiro uma dentro dos parametros ascii pertendidid
             break
         elif asrletter == 32:                             # caso clique no espaco devolve-me um tople de false
             return input(requested=False, received=False, duration=False)
 
     Stop = time()                                         # tempo final.
 
-    if letter == ins_letter:
 
+    global number_of_hits
+    global number_of_types
+
+    number_of_types+=1
+    if letter == ins_letter:
         print('you typed letter: ' + Fore.GREEN + ins_letter + Fore.RESET)
+        number_of_hits+=1
     else:
         print('you typed letter: ' + Fore.RED + ins_letter + Fore.RESET)
 
@@ -104,8 +109,8 @@ def ModoInput(input):
 
 
     for x in range(0, int(input)):
-        list.append(letter_time_counter())              # acresenta os varios nametuples numa lista
-        if not list[-1][1]:                         # caso ponha o espaco ele para de pedir os inputs
+        list.append(letter_time_counter())               # acresenta os varios nametuples numa lista
+        if not list[-1][1]:                              # caso ponha o espaco ele para de pedir os inputs
             del list[-1]                                 # elemina o ultimo elemento da lista pois e um manetuple a false
             break
 
@@ -129,8 +134,8 @@ def main():
     test_end = ctime()                                 # data final do teste
 
     test_duration = Tempo_end - Tempo_ini
-    print (test_start)
 
+    print (number_of_types)
 
 if __name__ == '__main__':
     main()
