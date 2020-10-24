@@ -136,7 +136,10 @@ def ModoTime(Time):
 
 def ModoInput(input):
     # modo de teste limitado pelos inputs
-    letter_time_counter()
+    list = []
+
+    for x in range(0, int(input)):
+        list.append(letter_time_counter())
 
 
 
