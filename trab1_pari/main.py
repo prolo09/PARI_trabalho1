@@ -63,6 +63,7 @@ def letter_time_counter():
 
     '''?????fazer com que o programa so aceite letras '''
 
+
     letter = random.choice(string.ascii_letters) # gera letras em maiusculas e minusculas
     letter = letter.lower() # converte para minusculas
     print('type letter: ' + letter)
@@ -79,7 +80,7 @@ def letter_time_counter():
     time_elapsed = Stop-Start # tempo de insersao da letra
 
 
-    return input( requested=letter,received=ins_letter,duration=time_elapsed), ins_letter
+    return input( requested=letter,received=ins_letter,duration=time_elapsed)
 
 
 
@@ -87,22 +88,33 @@ def letter_time_counter():
 def ModoTime(Time):
     # modo de teste limitado pelo tempo
 
+    list=[]
+
+    for x in range(1,3):
+
+        list.append(letter_time_counter())
+
+
+    print (list[1].duration)
+
+
+
+
+
+
     timeinicio=time()
-    timeduracao=timeinicio+Time
-
-    while True:
-        timeinicio=time()
-        if timeinicio!=timeduracao:
-
-            print
-        else:
-            break
+    timeduracao=int(timeinicio)+int(Time)
 
 
+   # while True:
+    #    timeinicio=time()
+     #   if timeinicio!=timeduracao:
+
+      #      print
+       # else:
+        #    break
 
 
-
-    print ("ddd")
 
 
 
@@ -114,7 +126,7 @@ def ModoInput(input):
     # modo de teste limitado pelos inputs
     letter_time_counter()
 
-    while
+
 
 
 
