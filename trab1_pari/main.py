@@ -70,14 +70,14 @@ def letter_time_counter():
     Start=time() # tempo inicio
 
 
-    while True:  # serve para so premitir que seja inseridas letras e nao carateres
+    while True:  # serve para so premitir que seja inseridas letras e nao carateres e caso seja espaco interromper o programa
         ins_letter = readchar.readchar() # pede para inserir uma letra
         asrletter=ord(ins_letter)
-        if (asrletter >97) and (asrletter<122):
+        if (asrletter >97) and (asrletter<122):   # so deixa de pedir letras quando insiro uma dentro dos parametros ascii pertendidid
             break
-        elif asrletter==32:
-            return False
-            break
+        elif asrletter==32:  # caso clique no espaco devolve-me um tople de false
+            return input(requested=False, received=False, duration=False)
+
 
 
     Stop= time() # tempo final
@@ -142,9 +142,13 @@ def ModoInput(input):
     list = []
 
     for x in range(0, int(input)):
-        #list.append(letter_time_counter())
-        if letter_time_counter()==False:
+        list.append(letter_time_counter())
+        if list[x][1]==False:
+            del list[x]
             break
+
+
+    print (list)
 
 
 
