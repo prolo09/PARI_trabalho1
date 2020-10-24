@@ -8,6 +8,7 @@ import readchar
 import random
 from time import time
 from collections import namedtuple
+from colorama import Fore
 
 input = namedtuple('Input', ['requested', 'received','duration']) # t tempo ls letra aleatoria lr letra introduzida
 
@@ -60,7 +61,7 @@ def escolhaModo():
 
 def letter_time_counter():
 
-    '''?????fazer com que o programa so asseite letras '''
+    '''?????fazer com que o programa so aceite letras '''
 
     letter = random.choice(string.ascii_letters) # gera letras em maiusculas e minusculas
     letter = letter.lower() # converte para minusculas
@@ -68,11 +69,17 @@ def letter_time_counter():
     Start=time() # tempo inicio
     ins_letter = readchar.readchar() # pede para inserir uma letra
     Stop= time() # tempo final
-    print('you typed: ' + ins_letter)
-    time_elapsed= Stop-Start # tempo no de insersao da letra
+
+    if letter == ins_letter:
+        print('you typed letter: ' + Fore.GREEN + ins_letter + Fore.RESET)
+    else:
+        print('you typed letter: ' + Fore.RED + ins_letter + Fore.RESET)
 
 
-    return input( requested=letter,received=ins_letter,duration=time_elapsed)
+    time_elapsed = Stop-Start # tempo de insersao da letra
+
+
+    return input( requested=letter,received=ins_letter,duration=time_elapsed), ins_letter
 
 
 
@@ -81,11 +88,11 @@ def ModoTime(Time):
     # modo de teste limitado pelo tempo
 
     timeinicio=time()
-    timeduraçao=timeinicio+Time
+    timeduracao=timeinicio+Time
 
     while True:
         timeinicio=time()
-        if timeinicio!=timeduraçao:
+        if timeinicio!=timeduracao:
 
             print
         else:
@@ -105,8 +112,11 @@ def ModoTime(Time):
 
 def ModoInput(input):
     # modo de teste limitado pelos inputs
+    letter_time_counter()
 
-    print ("iii")
+    while
+
+
 
 
 
@@ -138,12 +148,5 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-
 
 
