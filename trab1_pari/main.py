@@ -9,9 +9,10 @@ import random
 from time import time
 from collections import namedtuple
 from colorama import Fore
+from time import time, ctime
 
-input = namedtuple('Input', ['requested', 'received', 'duration'])  # t tempo ls letra aleatoria lr letra introduzida
 
+input = namedtuple('Input', ['requested', 'received', 'duration'])  # t tempo ls letra aleatoria lr letra introduz
 
 def escolhaModo():
     # escolha do MODO DE TESTE
@@ -51,6 +52,8 @@ def escolhaModo():
         timeInput = (args_list['max_value'])  # imputs maximo
 
 
+
+
 def letter_time_counter():
 
     letter = random.choice(string.ascii_letters)  # gera letras em maiusculas e minusculas
@@ -67,10 +70,15 @@ def letter_time_counter():
         elif asrletter == 32:  # caso clique no espaco devolve-me um tople de false
             return input(requested=False, received=False, duration=False)
 
-    Stop = time()  # tempo final
+    Stop = time()  # tempo final.
+
+
 
     if letter == ins_letter:
+
         print('you typed letter: ' + Fore.GREEN + ins_letter + Fore.RESET)
+
+
     else:
         print('you typed letter: ' + Fore.RED + ins_letter + Fore.RESET)
 
@@ -81,6 +89,7 @@ def letter_time_counter():
 
 def ModoTime(Time):
     # modo de teste limitado pelo tempo
+
 
     listTime = []
 
@@ -95,9 +104,12 @@ def ModoTime(Time):
             break
 
 
+
 def ModoInput(input):
     # modo de teste limitado pelos inputs
     list = []
+
+
 
     for x in range(0, int(input)):
         list.append(letter_time_counter())  # acresenta os varios nametuples numa lista
@@ -113,11 +125,18 @@ def main():
     print ("Press any key to start the test")
     readchar.readchar()  # para imprimir uma tecla qualquer para continuar o teste
 
+    Tempo_ini = time() #tempo inicial
+    test_start = ctime() # data inicial
+
     if modo:
         ModoTime(timeInput)
     else:
         ModoInput(timeInput)
 
+    Tempo_end = time() #tempo final
+    test_end = ctime() #data final
 
+    test_duration=Tempo_end - Tempo_ini
+    print ( test_start )
 if __name__ == '__main__':
     main()
