@@ -34,41 +34,41 @@ def escolhaModo():
     testModo.add_argument('-mv', '--max_value',
                           help='Max number of secs for time mode or maximum number of inputs for number of inputs mode', required=True)
 
-    args_list = vars(testModo.parse_args())                                # NB: importante converte o mamespace em dicionario atraves do vars
+    args_list = vars(testModo.parse_args())                          # NB: importante converte o mamespace em dicionario atraves do vars
 
     # excuta para teste em modo tempo (por isso o True e verdadeiro pois foi chamado no argomento) senao executa para modo imput
 
     if args_list['use_time_mode'] == True:
-        modo = True                                      # modo -true significa que o modo do teste e por tempo limite
+        modo = True                                                  # modo -true significa que o modo do teste e por tempo limite
         print(args_list)
         print (Fore.RED + "PARI" + Fore.RESET+ " Typing Test, Grupo 2, Outober 2020")
         print ("test running up to " + str(args_list['max_value']) + " seconds.")
-        timeInput = (args_list['max_value'])             # tempo maximo
+        timeInput = (args_list['max_value'])                         # tempo maximo
 
     else:
-        modo = False                                     # modo false quer dizer que o modo do teste e por imputs limite
+        modo = False                                                 # modo false quer dizer que o modo do teste e por imputs limite
         print (args_list)
         print ("PARI Typing Test, Grupo 2, Outober 2020")  # ????? falta por a cor no pari
         print ("test running up to " + str(args_list['max_value']) + " inputs")
-        timeInput = (args_list['max_value'])              # imputs maximo
+        timeInput = (args_list['max_value'])                         # imputs maximo
 
 
 def letter_time_counter():
-    letter = random.choice(string.ascii_letters)          # gera letras em maiusculas e minusculas
-    letter = letter.lower()                               # converte para minusculas
+    letter = random.choice(string.ascii_letters)                     # gera letras em maiusculas e minusculas
+    letter = letter.lower()                                          # converte para minusculas
     print('type letter: ' + letter)
-    Start = time()                                        # tempo inicio
+    Start = time()                                                   # tempo inicio
 
-    while True:                                           # serve para so premitir que seja inseridas letras e nao carateres e caso seja espaco interromper o programa
-        ins_letter = readchar.readchar()                  # pede para inserir uma letra
+    while True:                                                      # serve para so premitir que seja inseridas letras e nao carateres e caso seja espaco interromper o programa
+        ins_letter = readchar.readchar()                             # pede para inserir uma letra
         asrletter = ord(ins_letter)
         if (asrletter >= 97) and (
-                asrletter <= 122):                         # so deixa de pedir letras quando insiro uma dentro dos parametros ascii pertendidid
+                asrletter <= 122):                                   # so deixa de pedir letras quando insiro uma dentro dos parametros ascii pertendidid
             break
-        elif asrletter == 32:                             # caso clique no espaco devolve-me um tople de false
+        elif asrletter == 32:                                        # caso clique no espaco devolve-me um tople de false
             return input(requested=False, received=False, duration=False)
 
-    Stop = time()                                         # tempo final.
+    Stop = time()                                                    # tempo final.
 
 
     global number_of_hits
@@ -82,7 +82,7 @@ def letter_time_counter():
     else:
         print('you typed letter: ' + Fore.RED + ins_letter + Fore.RESET)
 
-    time_elapsed = Stop - Start                           # tempo de insersao da letra
+    time_elapsed = Stop - Start                                     # tempo de insersao da letra
 
     return input(requested=letter, received=ins_letter, duration=time_elapsed)
 
@@ -107,9 +107,9 @@ def ModoInput(input):
 
 
     for x in range(0, int(input)):
-        list.append(letter_time_counter())               # acresenta os varios nametuples numa lista
-        if not list[-1][1]:                              # caso ponha o espaco ele para de pedir os inputs
-            del list[-1]                                 # elemina o ultimo elemento da lista pois e um manetuple a false
+        list.append(letter_time_counter())                     # acresenta os varios nametuples numa lista
+        if not list[-1][1]:                                    # caso ponha o espaco ele para de pedir os inputs
+            del list[-1]                                       # elemina o ultimo elemento da lista pois e um manetuple a false
             break
 
     print (list)
@@ -121,25 +121,28 @@ def dict_resultados(test_date_end,test_date_start,test_duration):
     # calculos para a media da duracao de cada input
     sumTime=0
     for z in range(0,len(list)):
-        sumTime=list[z].duration+sumTime                # variavel para sumar todos os valores
+        sumTime=list[z].duration+sumTime                      # variavel para sumar todos os valores
 
-    type_average_duration=sumTime/(len(list))           # media dos valores
+    type_average_duration=sumTime/(len(list))                 # media dos valores
 
     # calculos para a media da duracao dos inputs corretos
 
-    sumTimeEq=0
-    sumTimeDef=0
-    certa=0
-    errada=0
+    sumTimeEq=0                                              # variavel para sumar os tempos certos
+    sumTimeDef=0                                             # variavel para sumar os tempos certos
+    certa=0                                                  # num de certas                                                   # nun de erradas
+    errada=0                                                 # nun de erradas
 
+# corre a vista compreta para destingir quais esta certas e erradas e faz a media consuante a certa ou errada
     for r in range(0, len(list)):
         if list[r].received==list[r].requested:
-            sumTimeEq=list[r].duration+sumTimeEq
-            certa+=1
+            sumTimeEq=list[r].duration+sumTimeEq            # suma o tempo de duracao das  certas
+            certa+=1                                        # contador de certas
         else:
-            sumTimeDef=list[r].duration+sumTimeDef
-            errada+=1
+            sumTimeDef=list[r].duration+sumTimeDef          # suma o tempo de duracao das erradas
+            errada+=1                                       # contador erradas
 
+
+# caso nao se acerte ou erre nenhuma o valor certo e errado era ser zero para evitar dividir por zero fizemos este if que devovem o tempo de zero para estes casos
     if certa !=0:
         type_hit_average_duration=sumTimeEq/certa
     else:
