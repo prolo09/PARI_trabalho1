@@ -34,24 +34,20 @@ def escolhaModo():
     testModo.add_argument('-mv', '--max_value',
                           help='Max number of secs for time mode or maximum number of inputs for number of inputs mode', required=True)
 
-    tes = testModo.parse_args()
-
-    ''' ???ainda nao pos para nao correr sem os argumentos '''
-
-    args_list = vars(tes)                                # NB: importante converte o mamespace em dicionario atraves do vars
+    args_list = vars(testModo.parse_args())                                # NB: importante converte o mamespace em dicionario atraves do vars
 
     # excuta para teste em modo tempo (por isso o True e verdadeiro pois foi chamado no argomento) senao executa para modo imput
 
     if args_list['use_time_mode'] == True:
         modo = True                                      # modo -true significa que o modo do teste e por tempo limite
-        print(tes)
+        print(args_list)
         print (Fore.RED + "PARI" + Fore.RESET+ " Typing Test, Grupo 2, Outober 2020")
         print ("test running up to " + str(args_list['max_value']) + " seconds.")
         timeInput = (args_list['max_value'])             # tempo maximo
 
     else:
         modo = False                                     # modo false quer dizer que o modo do teste e por imputs limite
-        print (tes)
+        print (args_list)
         print ("PARI Typing Test, Grupo 2, Outober 2020")  # ????? falta por a cor no pari
         print ("test running up to " + str(args_list['max_value']) + " inputs")
         timeInput = (args_list['max_value'])              # imputs maximo
