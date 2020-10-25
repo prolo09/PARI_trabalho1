@@ -6,22 +6,24 @@ import argparse
 import string
 import readchar
 import random
+from statistics import mean
 from collections import namedtuple
 from colorama import Fore
 from time import time, ctime
 from pprint import pprint
 
-input = namedtuple('Input', ['requested', 'received', 'duration'])  # t tempo ls letra aleatoria lr letra introduz
-list = []                                                # lista para guardar os tuples provenientes da dos modo input ou time
 
-number_of_hits=0                                         # variavel de inputs corretos
+input = namedtuple('Input', ['requested', 'received', 'duration'])  # t tempo ls letra aleatoria lr letra introduz
+list = []                                                           # lista para guardar os tuples provenientes da dos modo input ou time
+
+number_of_hits=0                                                    # variavel de inputs corretos
 number_of_types=0
 
 def escolhaModo():
     # escolha do MODO DE TESTE
 
-    global modo                                          # variavel para saber em que modo de jogo estou
-    global timeInput                                     # variavel que guarda os tempo ou o input
+    global modo                                                     # variavel para saber em que modo de jogo estou
+    global timeInput                                                # variavel que guarda os tempo ou o input
 
     testModo = argparse.ArgumentParser(description="Defenicao do modo de teste")
 
@@ -30,7 +32,7 @@ def escolhaModo():
                           help='Max number of secs for time mode or maximum number of inputs for number of inputs mode',
                           action="store_true")
     testModo.add_argument('-mv', '--max_value',
-                          help='Max number of secs for time mode or maximum number of inputs for number of inputs mode')
+                          help='Max number of secs for time mode or maximum number of inputs for number of inputs mode', required=True)
 
     tes = testModo.parse_args()
 
@@ -43,7 +45,7 @@ def escolhaModo():
     if args_list['use_time_mode'] == True:
         modo = True                                      # modo -true significa que o modo do teste e por tempo limite
         print(tes)
-        print ("PARI Typing Test, Grupo 2, Outober 2020")  # ?????falta por pari em cor vermelho
+        print (Fore.RED + "PARI" + Fore.RESET+ " Typing Test, Grupo 2, Outober 2020")
         print ("test running up to " + str(args_list['max_value']) + " seconds.")
         timeInput = (args_list['max_value'])             # tempo maximo
 
@@ -80,6 +82,7 @@ def letter_time_counter():
     if letter == ins_letter:
         print('you typed letter: ' + Fore.GREEN + ins_letter + Fore.RESET)
         number_of_hits+=1
+
     else:
         print('you typed letter: ' + Fore.RED + ins_letter + Fore.RESET)
 
@@ -90,8 +93,6 @@ def letter_time_counter():
 
 def ModoTime(Time):
     # modo de teste limitado pelo tempo
-
-    # print (list[1].duration)
 
     timeduracao = int(time()) + int(Time)
 
@@ -116,18 +117,57 @@ def ModoInput(input):
             break
 
     print (list)
-def dict_resultados(test_date_end,test_date_start,Tempo_end,Tempo_ini):
-    test_duration = Tempo_end - Tempo_ini
-    resultdict = {'accuracy': 0,
+def dict_resultados(test_date_end,test_date_start,test_duration):
+    # eleboracao das contas nececarias para os valres estatiticos e criacao do dicionario com os mesmo
+
+    accuracy=float(number_of_hits)/number_of_types             # precentaguem de respostas certas
+
+    # calculos para a media da duracao de cada input
+    sumTime=0
+    for z in range(0,len(list)):
+        sumTime=list[z].duration+sumTime                # variavel para sumar todos os valores
+
+    type_average_duration=sumTime/(len(list))           # media dos valores
+
+    # calculos para a media da duracao dos inputs corretos
+
+    sumTimeEq=0
+    sumTimeDef=0
+    certa=0
+    errada=0
+
+    for r in range(0, len(list)):
+        if list[r].received==list[r].requested:
+            sumTimeEq=list[r].duration+sumTimeEq
+            certa+=1
+        else:
+            sumTimeDef=list[r].duration+sumTimeDef
+            errada+=1
+
+    if certa !=0:
+        type_hit_average_duration=sumTimeEq/certa
+    else:
+        type_hit_average_duration=0
+
+    if errada !=0:
+        type_miss_average_duration=sumTimeDef/errada
+    else:
+        type_miss_average_duration=0
+
+
+
+
+
+    resultdict = {'accuracy': accuracy,
                   'inputs': list,
                   'number_of_hits': number_of_hits,
                   'number_of_types': number_of_types,
                   'test_duration': test_duration,
                   'test_end': test_date_end,
                   'test_start': test_date_start,
-                  'type_average_duration': 0,
-                  'type_hit_average_duration': 0,
-                  'type_miss_average_duration': 0 }
+                  'type_average_duration': type_average_duration,
+                  'type_hit_average_duration': type_hit_average_duration,
+                  'type_miss_average_duration': type_miss_average_duration }
     pprint(resultdict)
 
 def main():
@@ -138,18 +178,28 @@ def main():
     Tempo_ini = time()                                  # tempo inicial para correr o teste
     test_date_start = ctime()                               # data inicial do teste
 
+    # aplica o modo consunte o escolhido ateriormente se for true corre o modo tempo se for false o modo input
     if modo:
         ModoTime(timeInput)
     else:
         ModoInput(timeInput)
 
-    Tempo_end = time()                                 # tempo final para correr o teste
+    Tempo_end = time()                                     # tempo final para correr o teste
     test_date_end = ctime()                                 # data final do teste
 
-    dict_resultados(test_date_end, test_date_start, Tempo_end, Tempo_ini) #Dicionario dados teste
+    test_duration = Tempo_end - Tempo_ini                 # calculo para o tempo de duracao
 
-    print (number_of_types)
-    print(number_of_hits)
+    if modo:
+        if float(test_duration)>=float(timeInput):
+            print ("Current test duration (" + str(test_duration) + ") exceeds maximum of " + timeInput)
+        else:
+            print ("Current test duration (" + str(test_duration) + ") was less than " + timeInput)
+
+    print ( Fore.BLUE + "test finished" + Fore.RESET)                             #????? modar de cor
+
+    dict_resultados(test_date_end, test_date_start, test_duration) #Dicionario dados teste
+
+
 
 if __name__ == '__main__':
     main()
