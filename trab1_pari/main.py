@@ -6,7 +6,6 @@ import argparse
 import string
 import readchar
 import random
-from statistics import mean
 from collections import namedtuple
 from colorama import Fore
 from time import time, ctime
@@ -90,7 +89,7 @@ def letter_time_counter():
 def ModoTime(Time):
     # modo de teste limitado pelo tempo
 
-    timeduracao = int(time()) + int(Time)
+    timeduracao = float(time()) + float(Time)
 
     while True:
         list.append(letter_time_counter())
@@ -100,46 +99,52 @@ def ModoTime(Time):
             del list[-1]
             break
 
-    print (list)
+
 
 def ModoInput(input):
     # modo de teste limitado pelos inputs
 
 
     for x in range(0, int(input)):
-        list.append(letter_time_counter())                     # acresenta os varios nametuples numa lista
-        if not list[-1][1]:                                    # caso ponha o espaco ele para de pedir os inputs
-            del list[-1]                                       # elemina o ultimo elemento da lista pois e um manetuple a false
+        list.append(letter_time_counter())                       # acresenta os varios nametuples numa lista
+        if not list[-1][1]:                                      # caso ponha o espaco ele para de pedir os inputs
+            del list[-1]                                         # elemina o ultimo elemento da lista pois e um manetuple a false
             break
 
     print (list)
 def dict_resultados(test_date_end,test_date_start,test_duration):
     # eleboracao das contas nececarias para os valres estatiticos e criacao do dicionario com os mesmo
 
-    accuracy=float(number_of_hits)/number_of_types             # precentaguem de respostas certas
+    # para caso clique no espaco no sem inserie nenhum carater
+    if number_of_types!=0:
+        accuracy=float(number_of_hits)/number_of_types             # precentaguem de respostas certas
+    else:
+        accuracy=0
 
     # calculos para a media da duracao de cada input
     sumTime=0
-    for z in range(0,len(list)):
-        sumTime=list[z].duration+sumTime                      # variavel para sumar todos os valores
 
-    type_average_duration=sumTime/(len(list))                 # media dos valores
-
+    if len(list)!=0:                                              # para caso clique no espaco ao inicio
+        for z in range(0,len(list)):
+            sumTime=list[z].duration+sumTime                      # variavel para sumar todos os valores
+        type_average_duration=sumTime/(len(list))                 # media dos valores
+    else:
+        type_average_duration=0
     # calculos para a media da duracao dos inputs corretos
 
-    sumTimeEq=0                                              # variavel para sumar os tempos certos
-    sumTimeDef=0                                             # variavel para sumar os tempos certos
-    certa=0                                                  # num de certas                                                   # nun de erradas
-    errada=0                                                 # nun de erradas
+    sumTimeEq=0                                                   # variavel para somar os tempos certos
+    sumTimeDef=0                                                  # variavel para somar os tempos certos
+    certa=0                                                       # num de certas                                                   # nun de erradas
+    errada=0                                                      # nun de erradas
 
 # corre a vista compreta para destingir quais esta certas e erradas e faz a media consuante a certa ou errada
     for r in range(0, len(list)):
         if list[r].received==list[r].requested:
-            sumTimeEq=list[r].duration+sumTimeEq            # suma o tempo de duracao das  certas
-            certa+=1                                        # contador de certas
+            sumTimeEq=list[r].duration+sumTimeEq                 # suma o tempo de duracao das  certas
+            certa+=1                                             # contador de certas
         else:
-            sumTimeDef=list[r].duration+sumTimeDef          # suma o tempo de duracao das erradas
-            errada+=1                                       # contador erradas
+            sumTimeDef=list[r].duration+sumTimeDef               # suma o tempo de duracao das erradas
+            errada+=1                                            # contador erradas
 
 
 # caso nao se acerte ou erre nenhuma o valor certo e errado era ser zero para evitar dividir por zero fizemos este if que devovem o tempo de zero para estes casos
@@ -154,9 +159,7 @@ def dict_resultados(test_date_end,test_date_start,test_duration):
         type_miss_average_duration=0
 
 
-
-
-
+# dicionario com os valores a imprimir
     resultdict = {'accuracy': accuracy,
                   'inputs': list,
                   'number_of_hits': number_of_hits,
@@ -172,10 +175,10 @@ def dict_resultados(test_date_end,test_date_start,test_duration):
 def main():
     escolhaModo()
     print ("Press any key to start the test")
-    readchar.readchar()                                 # para imprimir uma tecla qualquer para continuar o teste
+    readchar.readchar()                                         # para imprimir uma tecla qualquer para continuar o teste
 
-    Tempo_ini = time()                                  # tempo inicial para correr o teste
-    test_date_start = ctime()                               # data inicial do teste
+    Tempo_ini = time()                                          # tempo inicial para correr o teste
+    test_date_start = ctime()                                   # data inicial do teste
 
     # aplica o modo consunte o escolhido ateriormente se for true corre o modo tempo se for false o modo input
     if modo:
@@ -202,3 +205,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
