@@ -9,6 +9,7 @@ import random
 from collections import namedtuple
 from colorama import Fore
 from time import time, ctime
+from pprint import pprint
 
 input = namedtuple('Input', ['requested', 'received', 'duration'])  # t tempo ls letra aleatoria lr letra introduz
 list = []                                                # lista para guardar os tuples provenientes da dos modo input ou time
@@ -115,7 +116,19 @@ def ModoInput(input):
             break
 
     print (list)
-
+def dict_resultados(test_date_end,test_date_start,Tempo_end,Tempo_ini):
+    test_duration = Tempo_end - Tempo_ini
+    resultdict = {'accuracy': 0,
+                  'inputs': list,
+                  'number_of_hits': number_of_hits,
+                  'number_of_types': number_of_types,
+                  'test_duration': test_duration,
+                  'test_end': test_date_end,
+                  'test_start': test_date_start,
+                  'type_average_duration': 0,
+                  'type_hit_average_duration': 0,
+                  'type_miss_average_duration': 0 }
+    pprint(resultdict)
 
 def main():
     escolhaModo()
@@ -123,7 +136,7 @@ def main():
     readchar.readchar()                                 # para imprimir uma tecla qualquer para continuar o teste
 
     Tempo_ini = time()                                  # tempo inicial para correr o teste
-    test_start = ctime()                                # data inicial do teste
+    test_date_start = ctime()                               # data inicial do teste
 
     if modo:
         ModoTime(timeInput)
@@ -131,11 +144,12 @@ def main():
         ModoInput(timeInput)
 
     Tempo_end = time()                                 # tempo final para correr o teste
-    test_end = ctime()                                 # data final do teste
+    test_date_end = ctime()                                 # data final do teste
 
-    test_duration = Tempo_end - Tempo_ini
+    dict_resultados(test_date_end, test_date_start, Tempo_end, Tempo_ini) #Dicionario dados teste
 
     print (number_of_types)
+    print(number_of_hits)
 
 if __name__ == '__main__':
     main()
