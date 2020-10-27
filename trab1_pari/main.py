@@ -12,7 +12,7 @@ from time import time, ctime
 from pprint import pprint
 
 
-input = namedtuple('Input', ['requested', 'received', 'duration'])  # t tempo ls letra aleatoria lr letra introduzida
+input = namedtuple('Input', ['requested', 'received', 'duration'])
 list = []                                                           # lista - guarda os tuples de cada input
 
 number_of_hits = 0                                                   # variavel de inputs corretos
@@ -33,7 +33,7 @@ def escolhaModo():
     testModo.add_argument('-mv', '--max_value',
                           help='Max number of secs for time mode or maximum number of inputs for number of inputs mode', required=True)
 
-    args_list = vars(testModo.parse_args())                      # NB: importante converte o mamespace em dicionario atraves do vars
+    args_list = vars(testModo.parse_args())                        # NB: importante converte o mamespace em dicionario atraves do vars
 
     # excuta para teste em modo tempo (por isso o True e verdadeiro pois foi chamado no argumento) senao executa para modo imput
 
@@ -53,6 +53,7 @@ def escolhaModo():
 
 
 def letter_time_counter():
+    # crai uma letra aliatoria
     letter = random.choice(string.ascii_letters)                     # gera letras em maiusculas e minusculas
     letter = letter.lower()                                          # converte para minusculas
     print('type letter: ' + letter)
@@ -111,7 +112,6 @@ def ModoInput(input):
             del list[-1]                                         # elimina o ultimo elemento da lista
             break
 
-    print (list)
 
 def dict_resultados(test_date_end, test_date_start, test_duration):
     # eleboracao das contas nececarias para os valres estatiticos e criacao do dicionario
@@ -123,14 +123,15 @@ def dict_resultados(test_date_end, test_date_start, test_duration):
         accuracy = 0
 
     # calculos para a media da duracao de cada input
-    sumTime = 0
+    sumTime = 0                                                     # variavel para somar todos os valores de duracao
+
 
     if len(list) != 0:                                              # para caso clique no espaco ao inicio
         for z in range(0, len(list)):
             sumTime = list[z].duration+sumTime                      # variavel para somar todos os valores
         type_average_duration = sumTime/(len(list))                 # media dos valores
     else:
-        type_average_duration = 0
+        type_average_duration = 0                                   # devolve a 0 caso cliquemps espaco no inicio
     # calculos para a media da duracao dos inputs corretos
 
     sumTimeEq = 0                                                   # variavel para somar os tempos certos
